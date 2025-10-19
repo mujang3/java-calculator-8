@@ -15,16 +15,26 @@ public class StringCalculator {
         String delimiter = DELIMITER;
 
         if (expression.startsWith("//")){
-            int newlineIdx = expression.indexOf('\n');
-            if (newlineIdx < 0){
+            int nl = expression.indexOf('\n');
+            int esc = expression.indexOf("\\n");
+            boolean usedExcaped = false;
+
+            if (nl < 0 && esc >= 0){
+                nl = esc;
+                usedExcaped = true;
+            }
+
+            if (nl < 0){
                 throw new IllegalArgumentException(ERROR_MESSAGE);
             }
-            String custom = expression.substring(2, newlineIdx);
+
+            String custom = expression.substring(2, nl);
             if (custom.length() != 1){
                 throw new IllegalArgumentException(ERROR_MESSAGE);
             }
             delimiter = Pattern.quote(custom);
-            expression = expression.substring(newlineIdx + 1);
+            int afterHeader = nl + (usedExcaped ? 2 : 1);
+            expression = expression.substring(afterHeader);
             if (expression.isEmpty()){
                 return 0;
             }
