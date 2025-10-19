@@ -1,6 +1,5 @@
 package calculator;
 
-import java.util.*;
 import java.util.regex.Pattern;
 
 public class StringCalculator {
@@ -8,7 +7,7 @@ public class StringCalculator {
     private static final String DELIMITER = "[,:]";
     private static final String ERROR_MESSAGE = "잘못된 입력입니다.";
 
-    public int add(String input) {
+    public static int add(String input) {
         if (input == null || input.isBlank()){
             return 0;
         }
